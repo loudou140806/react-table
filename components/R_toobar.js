@@ -10,6 +10,7 @@ export default class R_Toobar extends Component{
 		var item = common.getData()[0];
 		this.props.onAdd(item, item.id);
 		this.props.data.push(item);
+		console.log(this);
 	}
 	render(){
 		return (
@@ -20,7 +21,7 @@ export default class R_Toobar extends Component{
 				</div>
 				<div className="form-group">
 					<label>增加一行：</label>
-					<button className="btn btn-success" onClick = {(e) => this.onAdd(e)}>增加</button>
+					<button className="btn btn-success" onClick = {this.onAdd.bind(this)}>增加</button>
 				</div>
 			</div>
 		)

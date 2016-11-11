@@ -8,7 +8,7 @@ import reactTableApp from '../containers/reducers';
 import common from './common';
 
 let store = createStore(reactTableApp);		// Redux 应用只有一个单一的 store
-let data = common.getData();				// 随机生成数据
+let data = common.getData();		// 随机生成数据
 
 //向页面输出组件
 render(

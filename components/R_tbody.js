@@ -4,8 +4,7 @@ import common from '../app/common.js';
 
 export default class R_tbody extends Component{
 	onDelete(e){
-		let index = e.target;
-		console.log(e.target);
+		let index = e.target.id;
 		this.props.onDelete(index);
 	} 
 	render () {
@@ -19,7 +18,7 @@ export default class R_tbody extends Component{
 			filterWord = operation.FILTER;
 		}
 
-		if(filterWord && filterWord != "all"){	
+		if(filterWord){	
 			data = data.filter((item,index)=>{
 				let keys = Object.keys(item);
 				for (var i = 0; i < keys.length; i++) {
@@ -27,11 +26,28 @@ export default class R_tbody extends Component{
 					if(String(cell).toLowerCase().indexOf(filterWord.toLowerCase()) != -1){
 						return item;
 					}
-				};
+				}
 			})
-		}else{
+		}
+		else{
 			data = this.props.data;
-		}		
+		}
+
+		if(operation.DELETE){
+			console.log('this is in delete' + operation.DELETE);
+			let dIndex;
+			data = data.filter((item,index)=>{
+				if(item.id != operation.DELETE){
+					return item;
+				}else{
+					console.log('index equal');
+					dIndex = index;
+				}
+			});
+			if(dIndex){
+				this.props.data.splice(dIndex, 1);
+			}
+		}
 		return (
 			<tbody>
 				{
@@ -46,7 +62,7 @@ export default class R_tbody extends Component{
 									<td>{item.account}</td>
 									<td>{item.ip}</td>
 									<td>{item.port}</td>
-									<td><span id={item.id} className="btn btn-warning" onClick = {e => this.onDelete(e)}>删除</span></td>
+									<td><span id={item.id} className="btn btn-warning" onClick = {this.onDelete.bind(this)}>删除</span></td>
 								</tr>
 							)												
 						}
